@@ -1,4 +1,3 @@
-// src/hooks/useImageData.ts
 import { useState, useEffect } from 'react';
 import { WheelSegment } from '../Utils/type';
 import moneyImagefile from '../assets/image/money_1-removebg-preview.png'; // Import the image directly

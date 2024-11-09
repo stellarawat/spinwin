@@ -38,6 +38,8 @@ body {
     color: #ffdd57;
     margin-bottom: 20px;
     font-weight: bold;
+    text-decoration:underline;
+    
 }
 
 /* Spin Wheel */
@@ -90,7 +92,8 @@ body {
     width: 100%;
     max-width: 20%; 
     max-height: 20%; 
-    margin-bottom: 40px;
+    margin-bottom: 50px;
+    margin-left: 60px;
 }
 .wheel-segment:nth-child(1) { transform: rotate(12deg) translateY(-110px); }
 .wheel-segment:nth-child(2) { transform: rotate(36deg) translateY(-110px); }
@@ -108,18 +111,45 @@ body {
 .wheel-segment:nth-child(14) { transform: rotate(324deg) translateY(-110px); }
 .wheel-segment:nth-child(15) { transform: rotate(348deg) translateY(-110px); }
 
-/* Spin Button in Center */
+/* Spin Button */
+
 .spin-button {
-    position: relative;
     width: 60px;
     height: 60px;
     background-color: rgba(245, 245, 245, 0.918);
     border-radius: 50%;
     cursor: pointer;
     margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 15px; 
+    color: #006BCB; 
+    text-transform: uppercase;
+    /* transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out; */
+    
+    /* Add the pulse animation */
+    animation: pulse 1.5s infinite ease-in-out;
 }
 
-/* Pointer Arrow - Stick with Arrowhead */
+/* Pulse Animation */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        background-color: rgba(245, 245, 245, 0.918);
+    }
+    50% {
+        transform: scale(1.1); 
+        background-color: rgba(245, 245, 245, 0.8); 
+    }
+    100% {
+        transform: scale(1);
+        background-color: rgba(245, 245, 245, 0.918);
+    }
+}
+
+/* Pointer Arrow */
 
 .pointer-arrow {
     position: absolute;
@@ -133,6 +163,7 @@ body {
 }
 
 /* Arrowhead */
+
 .pointer-arrow::after {
     content: '';
     position: absolute;

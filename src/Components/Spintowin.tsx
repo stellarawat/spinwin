@@ -1,4 +1,3 @@
-
 import React from 'react';
 import '../style.css';
 import useImageData from '../Hooks/useImageData';
