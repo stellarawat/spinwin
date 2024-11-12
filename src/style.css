@@ -1,177 +1,103 @@
-/* Main App Container */
-.app-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid blue;
-    background-color: darkred; 
-    margin: 3px;
-    padding: 10px; 
-}
-
 body {
-    max-width: 420px;
-    min-height: 100vh;
     margin: 0;
-    padding: 0;
+    padding: 0;  
+    background-color: #01004d;
+}
+
+/* balance  */
+
+.balance-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3px 0;
     width: 100%;
-}
-
-/* Spin-to-Win Container */
-
-.spin-to-win-container {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    padding: 20px;
-    border: 1px solid blue;
-    border-radius: 8px;
-    background-color: #0c0c0c;
-} 
-
-/* Header */
-
-.spin-header {
-    font-size: 10px;
-    color: #ffdd57;
-    margin-bottom: 20px;
-    font-weight: bold;
-    text-decoration:underline;
-    
-}
-
-/* Spin Wheel */
-
-.spin-wheel {
-    position: relative;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    background: conic-gradient(
-    #003966 0deg 24deg,
-    #006BCB 24deg 48deg,
-    #00A4D7 48deg 72deg,
-    #003966 72deg 96deg,
-    #006BCB 96deg 120deg,
-    #00A4D7 120deg 144deg,
-    #003966 144deg 168deg,
-    #006BCB 168deg 192deg,
-    #00A4D7 192deg 216deg,
-    #003966 216deg 240deg,
-    #006BCB 240deg 264deg,
-    #00A4D7 264deg 288deg,
-    #003966 288deg 312deg,
-    #006BCB 312deg 336deg,
-    #00A4D7 336deg 360deg
-    );
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    overflow: hidden;
-}
-
-
-/* Wheel Segment */
-.wheel-segment {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex: 1;
-    position: absolute; 
-    width: 100%;
-    height: 100%;
-    transform-origin: center;
-    box-sizing: border-box;
-}
-
-/* Game Image */
-.game-image {
-    width: 100%;
-    max-width: 20%; 
-    max-height: 20%; 
-    margin-bottom: 50px;
-    margin-left: 60px;
-}
-.wheel-segment:nth-child(1) { transform: rotate(12deg) translateY(-110px); }
-.wheel-segment:nth-child(2) { transform: rotate(36deg) translateY(-110px); }
-.wheel-segment:nth-child(3) { transform: rotate(60deg) translateY(-110px); }
-.wheel-segment:nth-child(4) { transform: rotate(84deg) translateY(-110px); }
-.wheel-segment:nth-child(5) { transform: rotate(108deg) translateY(-110px); }
-.wheel-segment:nth-child(6) { transform: rotate(132deg) translateY(-110px); }
-.wheel-segment:nth-child(7) { transform: rotate(156deg) translateY(-110px); }
-.wheel-segment:nth-child(8) { transform: rotate(180deg) translateY(-110px); }
-.wheel-segment:nth-child(9) { transform: rotate(204deg) translateY(-110px); }
-.wheel-segment:nth-child(10) { transform: rotate(228deg) translateY(-110px); }
-.wheel-segment:nth-child(11) { transform: rotate(252deg) translateY(-110px); }
-.wheel-segment:nth-child(12) { transform: rotate(276deg) translateY(-110px); }
-.wheel-segment:nth-child(13) { transform: rotate(300deg) translateY(-110px); }
-.wheel-segment:nth-child(14) { transform: rotate(324deg) translateY(-110px); }
-.wheel-segment:nth-child(15) { transform: rotate(348deg) translateY(-110px); }
-
-/* Spin Button */
-
-.spin-button {
-    width: 60px;
-    height: 60px;
-    background-color: rgba(245, 245, 245, 0.918);
-    border-radius: 50%;
-    cursor: pointer;
-    margin-top: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 15px; 
-    color: #006BCB; 
-    text-transform: uppercase;
-    /* transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out; */
-    
-    /* Add the pulse animation */
-    animation: pulse 1.5s infinite ease-in-out;
-}
-
-/* Pulse Animation */
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-        background-color: rgba(245, 245, 245, 0.918);
-    }
-    50% {
-        transform: scale(1.1); 
-        background-color: rgba(245, 245, 245, 0.8); 
-    }
-    100% {
-        transform: scale(1);
-        background-color: rgba(245, 245, 245, 0.918);
-    }
-}
-
-/* Pointer Arrow */
-
-.pointer-arrow {
     position: absolute;
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -100%); 
-    width: 5px;
-    height: 60px; 
-    background-color: #ffdd57; 
+}
+/* Balance Section */
+
+.balance-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 80px;
+    width: 100%;
+    border: 1px solid white;
+    padding: 5px;
+    border-radius: 5px;
+}
+.back-btn-img{
+    width: 24px;
+    height:24px;
+    left: 20px;
+    
+}
+.amount-txt{
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    justify-content: center;
+
+}
+.img-plus-deposit{
+    width: 19px;
+    height:19px;
+}
+.img-setting{
+    width: 24px;
+    height:24px;
+}
+.drop-btn{
+    width: 24px;
+    height:24px;
+}
+.dropdown-content {
+    position: absolute;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #0c0c0c;
     border-radius: 5px;
 }
 
-/* Arrowhead */
+/* main spin content  */
 
-.pointer-arrow::after {
-    content: '';
-    position: absolute;
-    top: -10px; 
-    left: 50%;
-    transform: translateX(-50%); 
-    width: 15px;
-    height: 15px;
-    background-color: #ffdd57; 
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+/* Header */
+
+.main-spi-content{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 25px 10px;
+    gap: 10px;
+
+}
+
+
+.spin-title{
+    color: white;
+    text-align: center;
+    
+}
+.spin-header {
+    font-size: 22px; 
+    color: #ffdd57;
+    font-weight: 700;
+    text-transform: uppercase;
+
+}
+
+.spin-button {
+    padding: 30px;
+    background-color: rgba(245, 245, 245, 0.918);
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px; 
+    text-align: center;
+    color: #006BCB; 
+    text-transform: uppercase;
+    animation: pulse 1.5s infinite ease-in-out;
 }
