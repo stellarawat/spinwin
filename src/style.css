@@ -4,6 +4,8 @@ body {
     background-color: #01004d;
 }
 
+/* Balance Section */
+
 /* balance  */
 
 .balance-header {
@@ -14,7 +16,6 @@ body {
     width: 100%;
     position: absolute;
 }
-/* Balance Section */
 
 .balance-section{
     display: flex;
@@ -72,9 +73,7 @@ body {
     align-items: center;
     padding: 25px 10px;
     gap: 10px;
-
 }
-
 
 .spin-title{
     color: white;
@@ -89,15 +88,36 @@ body {
 
 }
 
-.spin-button {
-    padding: 30px;
-    background-color: rgba(245, 245, 245, 0.918);
+/* spin button  */
+/* @keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(245, 245, 245, 0.8);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 20px rgba(245, 245, 245, 0.8);
+    }
+} */
+
+/* .spin-button {
+    padding: 20px;
     border-radius: 50%;
     cursor: pointer;
     font-weight: bold;
-    font-size: 15px; 
+    font-size: 12px; 
     text-align: center;
-    color: #006BCB; 
     text-transform: uppercase;
     animation: pulse 1.5s infinite ease-in-out;
+} */
+
+/* arrow head  */
+.pointer-arrow {
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 30px solid #2bff00d2;
+    position: absolute;
+    top: 90px; 
+    left: 50%;
 }
+

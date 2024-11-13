@@ -30,16 +30,18 @@ const SpinToWin: FC = () => {
     const spinCost = 10; 
     const segmentAngle = 360 / wheelData.length;
 
-    // canvas 
+    // canvas spin to
     const drawPieChart = () => {
         const canvas = canvasRef.current;
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        const centerX = canvas.width / 2;
+        const centerX = canvas.width / 2; 
         const centerY = canvas.height / 2;
         const radius = centerX;
+
+        const segmentAngle = (2 * Math.PI) / wheelData.length;
 
         const outerRimGradient = ctx.createRadialGradient(centerX, centerY, radius * 0.9, centerX, centerY, radius);
         outerRimGradient.addColorStop(0, '#FFD700'); // Start with gold inside
@@ -55,9 +57,14 @@ const SpinToWin: FC = () => {
         ctx.shadowColor = 'transparent';
 
         // Draw pie chart segments 
+
         wheelData.forEach((segment, index) => {
-            const startAngle = (index * segmentAngle * Math.PI) / 180;
-            const endAngle = ((index + 1) * segmentAngle * Math.PI) / 180;
+            const startAngle = index * segmentAngle;
+            const endAngle = startAngle + segmentAngle;
+
+        // wheelData.forEach((segment, index) => {
+        //     const startAngle = (index * segmentAngle * Math.PI) / 180;
+        //     const endAngle = ((index + 1) * segmentAngle * Math.PI) / 180;
 
             const gradient = ctx.createRadialGradient(centerX, centerY, radius * 0.3, centerX, centerY, radius);
             gradient.addColorStop(0, index % 2 === 0 ? '#FFFACD' : '#FFA07A'); 
@@ -75,18 +82,20 @@ const SpinToWin: FC = () => {
             ctx.shadowOffsetX = 2;
             ctx.shadowOffsetY = 2;
             ctx.fill();
-            ctx.shadowColor = 'transparent';
+            ctx.shadowColor = 'transparent';  
+
+            // msiambiane hiyo story ya wheel ... wacha wabaki wakijua ni SpinToWin.
 
             // Add text on the segments
             ctx.save();
             ctx.translate(
-                centerX + (radius / 1.5) * Math.cos(startAngle + (endAngle - startAngle) / 2),
-                centerY + (radius / 1.5) * Math.sin(startAngle + (endAngle - startAngle) / 2)
-            );
-            ctx.rotate(startAngle + (endAngle - startAngle) / 2);
-            ctx.font = '20px montserat'; 
+            centerX + (radius / 1.5) * Math.cos(startAngle + segmentAngle / 2),
+            centerY + (radius / 1.5) * Math.sin(startAngle + segmentAngle / 2)
+        );
+            ctx.rotate(startAngle + segmentAngle / 2);
+            ctx.font = '20px montserrat'; 
             ctx.fillStyle = 'black';
-            ctx.fillText(`${segment.amount}`, -5, 0); // Center text
+            ctx.fillText(`${segment.amount}`, -10, 0); // Center the text
             ctx.restore();
         });
     };
@@ -95,7 +104,7 @@ const SpinToWin: FC = () => {
     useEffect(() => {
         const updateCanvasSize = () => {
             const containerWidth = canvasRef.current?.parentElement?.offsetWidth || 500;
-            setCanvasSize(containerWidth < 500 ? containerWidth : 500); // Maximum 500px width
+            setCanvasSize(containerWidth < 500 ? containerWidth : 500);
         };
 
         window.addEventListener('resize', updateCanvasSize);
@@ -117,8 +126,9 @@ const SpinToWin: FC = () => {
 
         const winningIndex = Math.floor(Math.random() * wheelData.length);
         const winningAngle = segmentAngle * winningIndex;
-        const fullRotations = 6;
-        const targetRotation = fullRotations * 360 + (360 - winningAngle);
+        const fullRotations = 20;
+        const pointerAdjustment = 360 / 2;
+        const targetRotation = fullRotations * 360 + (pointerAdjustment - winningAngle);
 
         setRotation(targetRotation);
 
@@ -175,6 +185,9 @@ const SpinToWin: FC = () => {
                         }}
                     />
                 </div>
+
+                <div className="pointer-arrow"/> 
+                
 
                 <button className="spin-button" onClick={handleSpin}>
                     {spinning ? 'Spinning...' : 'Spin'}
