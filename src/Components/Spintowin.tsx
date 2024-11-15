@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import {useCallback, useEffect, useRef, useState } from 'react';
 import '../style.css';
 import useImageData from '../Hooks/useImageData';
 import backImg from '../assets/image/back.png';
@@ -9,10 +9,9 @@ import helpImg from '../assets/image/help.png';
 import soundOnImg from '../assets/image/sound-on.png';
 import soundOffImg from '../assets/image/mute-button.png';
 
-const SpinToWin: FC = () => {
-    const wheelData = useImageData();
-    const [rotation, setRotation] = useState(0);
-    const [spinning, setSpinning] = useState(false);
+const SpinToWin = () => {
+    const wheelData = useImageData(); 
+    const [spinState, setSpinState] = useState(0);
     const [balance, setBalance] = useState(1000); 
     const [isMuted, setIsMuted] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
@@ -30,7 +29,8 @@ const SpinToWin: FC = () => {
     const spinCost = 10; 
     const segmentAngle = 360 / wheelData.length;
 
-    // canvas spin to
+    const cardWords = ["x 0.00", "x 0.5", "x 0.10", "x 1.00", "x 1.50", "x 2.00"];
+
     const drawPieChart = () => {
         const canvas = canvasRef.current;
         if (!canvas) return;
@@ -44,27 +44,20 @@ const SpinToWin: FC = () => {
         const segmentAngle = (2 * Math.PI) / wheelData.length;
 
         const outerRimGradient = ctx.createRadialGradient(centerX, centerY, radius * 0.9, centerX, centerY, radius);
-        outerRimGradient.addColorStop(0, '#FFD700'); // Start with gold inside
-        outerRimGradient.addColorStop(1, '#FF4500'); // End with orange-red on the outer edge
+        outerRimGradient.addColorStop(0, '#FFD700'); 
+        outerRimGradient.addColorStop(1, '#FF4500'); 
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
         ctx.fillStyle = outerRimGradient; 
 
-        // Apply shadow blur for the outer rim
         ctx.shadowColor = '#FF4500';
         ctx.shadowBlur = 15;
         ctx.fill();
         ctx.shadowColor = 'transparent';
 
-        // Draw pie chart segments 
-
         wheelData.forEach((segment, index) => {
             const startAngle = index * segmentAngle;
             const endAngle = startAngle + segmentAngle;
-
-        // wheelData.forEach((segment, index) => {
-        //     const startAngle = (index * segmentAngle * Math.PI) / 180;
-        //     const endAngle = ((index + 1) * segmentAngle * Math.PI) / 180;
 
             const gradient = ctx.createRadialGradient(centerX, centerY, radius * 0.3, centerX, centerY, radius);
             gradient.addColorStop(0, index % 2 === 0 ? '#FFFACD' : '#FFA07A'); 
@@ -73,8 +66,8 @@ const SpinToWin: FC = () => {
             ctx.beginPath();
             ctx.moveTo(centerX, centerY);
             ctx.arc(centerX, centerY, radius * 0.9, startAngle, endAngle);
-            // ctx.fillStyle = gradient;
-            ctx.fillStyle = index % 2 === 0 ? '#FFD700' : '#FF4500';
+            // ctx.fillStyle = index % 2 === 0 ? '#FFD700' : '#FF4500';
+            ctx.fillStyle=segment.color;
             ctx.fill();
 
             ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
@@ -82,25 +75,21 @@ const SpinToWin: FC = () => {
             ctx.shadowOffsetX = 2;
             ctx.shadowOffsetY = 2;
             ctx.fill();
-            ctx.shadowColor = 'transparent';  
+            ctx.shadowColor = 'transparent';
 
-            // msiambiane hiyo story ya wheel ... wacha wabaki wakijua ni SpinToWin.
-
-            // Add text on the segments
             ctx.save();
             ctx.translate(
-            centerX + (radius / 1.5) * Math.cos(startAngle + segmentAngle / 2),
-            centerY + (radius / 1.5) * Math.sin(startAngle + segmentAngle / 2)
-        );
+                centerX + (radius / 1.5) * Math.cos(startAngle + segmentAngle / 2),
+                centerY + (radius / 1.5) * Math.sin(startAngle + segmentAngle / 2)
+            );
             ctx.rotate(startAngle + segmentAngle / 2);
             ctx.font = '20px montserrat'; 
             ctx.fillStyle = 'black';
-            ctx.fillText(`${segment.amount}`, -10, 0); // Center the text
+            ctx.fillText(`${segment.amount}`, -10, 0); 
             ctx.restore();
         });
     };
 
-    // Dynamically resize canvas
     useEffect(() => {
         const updateCanvasSize = () => {
             const containerWidth = canvasRef.current?.parentElement?.offsetWidth || 500;
@@ -108,36 +97,37 @@ const SpinToWin: FC = () => {
         };
 
         window.addEventListener('resize', updateCanvasSize);
-        updateCanvasSize(); // Set initial size
+        updateCanvasSize();
 
         return () => window.removeEventListener('resize', updateCanvasSize);
     }, []);
 
-    // Redraw the canvas when wheel data or size changes
     useEffect(() => {
         drawPieChart();
     }, [wheelData, canvasSize]);
 
-    const handleSpin = () => {
-        if (spinning || balance < spinCost) return;
+    const handleSpin = useCallback(() => {
+        if (spinState !== 0 || balance < spinCost) return; // Ensure wheel is not spinning
 
-        setSpinning(true);
         setBalance(balance - spinCost);
 
         const winningIndex = Math.floor(Math.random() * wheelData.length);
         const winningAngle = segmentAngle * winningIndex;
-        const fullRotations = 20;
-        const pointerAdjustment = 360 / 2;
+        const fullRotations = 10;
+        const pointerAdjustment = -90; 
         const targetRotation = fullRotations * 360 + (pointerAdjustment - winningAngle);
 
-        setRotation(targetRotation);
-
+        setSpinState(targetRotation);
         setTimeout(() => {
+            console.log('index',winningIndex)
             const winningAmount = wheelData[winningIndex].amount;
-            setBalance(balance + winningAmount);
-            setSpinning(false);
+            console.log(wheelData)
+            console.log('amount in the index',winningAmount)
+            setBalance((prev) => prev + winningAmount);
+            setSpinState(0)
         }, 4000);
-    };
+
+    }, [spinState, balance, wheelData, segmentAngle]);
 
     return (
         <>
@@ -180,18 +170,28 @@ const SpinToWin: FC = () => {
                         width={canvasSize}
                         height={canvasSize}
                         style={{
-                            transform: `rotate(${rotation}deg)`,
-                            transition: spinning ? 'transform 4s ease-out' : 'none',
+                            transform: `rotate(${spinState}deg)`,
+                            transition: spinState ? 'transform 5s ease-out' : 'none',
                         }}
                     />
                 </div>
 
-                <div className="pointer-arrow"/> 
+                <div
+    className="pointer-arrow"/>
                 
-
                 <button className="spin-button" onClick={handleSpin}>
-                    {spinning ? 'Spinning...' : 'Spin'}
+                    {spinState ? 'Spinning...' : 'Spin'}
                 </button>
+
+                {/* Multiplying Cards Section */}
+
+                <div className="multiply-cards">
+                    {cardWords.map((word, index) => (
+                        <div key={index} className={`multiply-card card-${index}`}>
+                            {word}
+                        </div>
+                    ))}
+                </div>
             </div>
         </>
     );

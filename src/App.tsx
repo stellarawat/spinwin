@@ -3,7 +3,7 @@ import "./style.css";
 import SpinToWin from './Components/Spintowin';
 import './App.css';
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <>
       <SpinToWin />
